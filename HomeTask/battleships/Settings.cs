@@ -11,7 +11,7 @@ namespace battleships
 		public int GamesCount;
 		public int Height;
 		public bool Interactive;
-		public int MemoryLimit;
+		public long MemoryLimit;
 		public int RandomSeed;
 		public int[] Ships;
 		public int TimeLimitSeconds;

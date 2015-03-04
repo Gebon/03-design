@@ -9,10 +9,10 @@ namespace battleships
 		private readonly Settings settings;
 		private readonly Random random;
 
-		public MapGenerator(Settings settings)
+		public MapGenerator(Settings settings, Random random)
 		{
 			this.settings = settings;
-			random = new Random(settings.RandomSeed);
+		    this.random = random;
 		}
 
 		public Map GenerateMap()
@@ -42,7 +42,7 @@ namespace battleships
 		public void always_succeed_on_standard_map()
 		{
 			var settings = new Settings { Width = 10, Height = 10, Ships = new[] { 1, 1, 1, 1, 2, 2, 2, 3, 3, 4 } };
-			var gen = new MapGenerator(settings);
+			var gen = new MapGenerator(settings, new Random());
 			for (var i = 0; i < 10000; i++)
 				gen.GenerateMap();
 		}
