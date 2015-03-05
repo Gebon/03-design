@@ -13,7 +13,7 @@ namespace battleships
 	public class Game
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly Ai ai;
+		private Ai ai;
 
 		public Game(Map map, Ai ai)
 		{
@@ -22,6 +22,11 @@ namespace battleships
 			TurnsCount = 0;
 			BadShots = 0;
 		}
+
+	    public void SetAi(Ai ai)
+	    {
+	        this.ai = ai;
+	    }
 
 		public Vector LastTarget { get; private set; }
 		public int TurnsCount { get; private set; }

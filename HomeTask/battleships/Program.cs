@@ -17,7 +17,15 @@ namespace battleships
 				return;
 			}
 			var aiPath = args[0];
-			var settings = new Settings("settings.txt");
+            var settings = new Settings("settings.txt");
+
+            var gen = new MapGenerator(settings, new Random(settings.RandomSeed));
+            var vis = new GameVisualizer();
+            var monitor = new ProcessMonitor(TimeSpan.FromSeconds(settings.TimeLimitSeconds * settings.GamesCount), settings.MemoryLimit);
+
+            var ai = new Ai(aiPath);
+            ai.NewProcessStarted += monitor.Register;
+
 			var tester = new AiTester(settings);
 			if (File.Exists(aiPath))
 				tester.TestSingleFile(aiPath);

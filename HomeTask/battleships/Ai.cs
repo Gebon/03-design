@@ -11,12 +11,10 @@ namespace battleships
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private Process process;
 		private readonly string exePath;
-		private readonly ProcessMonitor monitor;
 
-		public Ai(string exePath, ProcessMonitor monitor)
+		public Ai(string exePath)
 		{
 			this.exePath = exePath;
-			this.monitor = monitor;
 		}
 
 		public string Name
@@ -62,6 +60,8 @@ namespace battleships
 			process = null;
 		}
 
+	    public event Action<Process> NewProcessStarted;
+
 		private Process RunProcess()
 		{
 			var startInfo = new ProcessStartInfo
@@ -75,8 +75,8 @@ namespace battleships
 				WindowStyle = ProcessWindowStyle.Hidden
 			};
 			var aiProcess = Process.Start(startInfo);
-			monitor.Register(aiProcess);
-			return aiProcess;
+		    if (NewProcessStarted != null) NewProcessStarted.Invoke(aiProcess);
+		    return aiProcess;
 		}
 
 		private Vector ReceiveNextShot()
